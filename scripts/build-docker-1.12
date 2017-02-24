@@ -1,0 +1,25 @@
+#!/bin/bash
+
+set -e
+set -o pipefail
+set -o nounset
+
+# build-docker-1.12 builds an aci for docker 1.12
+
+aci_name="${1:-"skim.release.core-os.net/docker/dockerd"}"
+aci_version="${2:-"v1.12.6"}"
+
+ROOT=$(dirname "${BASH_SOURCE}")/..
+
+source "${ROOT}/scripts/docker-util.sh"
+
+docker_version="v1.12.6"
+runc_repo="docker/runc"
+runc_commit="50a19c6ff828c58e5dab13830bd3dacde268afe5"
+containerd_commit="2a5e70cbf65457815ee76b7e5dd2a01292d9eca8"
+
+build_docker "${docker_version}"
+build_runc "${runc_repo}" "${runc_commit}"
+build_containerd "${containerd_commit}"
+
+package_dockerd_aci "${aci_name}" "${aci_version}" "docker-${docker_version}.aci"
