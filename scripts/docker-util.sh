@@ -98,14 +98,14 @@ package_dockerd_aci() {
     acbuild label add version "$version"
     acbuild label add arch "amd64"
     acbuild label add os "linux"
-    acbuild copy "${DOCKERD_BIN}" "${prefix}/dockerd"
-    acbuild copy "${DOCKER_BIN}" "${prefix}/docker"
-    acbuild copy "${DOCKER_PROXY_BIN}" "${prefix}/docker-proxy"
+    acbuild copy "$(readlink -f "${DOCKERD_BIN}")" "${prefix}/dockerd"
+    acbuild copy "$(readlink -f "${DOCKER_BIN}")" "${prefix}/docker"
+    acbuild copy "$(readlink -f "${DOCKER_PROXY_BIN}")" "${prefix}/docker-proxy"
 
-    acbuild copy "${RUNC_BIN}" "${prefix}/docker-runc"
-    acbuild copy "${CONTAINERD_BIN}" "${prefix}/docker-containerd"
-    acbuild copy "${CTR_BIN}" "${prefix}/docker-containerd-ctr"
-    acbuild copy "${CONTAINERD_SHIM_BIN}" "${prefix}/docker-containerd-shim"
+    acbuild copy "$(readlink -f "${RUNC_BIN}")" "${prefix}/docker-runc"
+    acbuild copy "$(readlink -f "${CONTAINERD_BIN}")" "${prefix}/docker-containerd"
+    acbuild copy "$(readlink -f "${CTR_BIN}")" "${prefix}/docker-containerd-ctr"
+    acbuild copy "$(readlink -f "${CONTAINERD_SHIM_BIN}")" "${prefix}/docker-containerd-shim"
 
     acbuild set-exec "${prefix}/dockerd"
 
